@@ -110,7 +110,7 @@ module.exports = (config) ->
 
   # START ------------------------------------------------------------------
 
-  Norma.task "meteor-start", (cb) ->
+  Norma.task "meteor-run-start", (cb) ->
 
 
     Meteor.start()
@@ -125,7 +125,7 @@ module.exports = (config) ->
 
   # BUILD ------------------------------------------------------------------
 
-  Norma.task "meteor-build", (cb) ->
+  Norma.task "meteor-run-build", (cb) ->
 
     prepare ->
 
@@ -152,7 +152,7 @@ module.exports = (config) ->
 
   # METEOR -----------------------------------------------------------------
 
-  Norma.task "meteor", (cb, tasks) ->
+  Norma.task "meteor-run", (cb, tasks) ->
 
     # make sure meteor is ready to go!
     prepare ->
@@ -213,7 +213,7 @@ module.exports = (config) ->
 
 
   # Set your file type(s) here
-  Norma.tasks["meteor"].order = "post"
+  Norma.tasks["meteor-run"].order = "post"
 
 
   # Export all of your tasks
