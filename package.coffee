@@ -63,17 +63,8 @@ module.exports = (config) ->
 
 
     else
-      ready = Prepare _meteor
+      callback()
 
-      ready.then( ->
-
-        callback()
-
-      ).fail( (err) ->
-
-        # Map captured errors back to domain
-        Norma.domain._events.error err
-      )
 
 
 
@@ -83,11 +74,7 @@ module.exports = (config) ->
 
   Norma.on "watch-start", ->
 
-      # shim for not running meteor but maintaining it
-    if _meteor.watch is false
-      return
-
-    Norma.execute "meteor"
+    Norma.execute "meteor-run"
 
 
 
@@ -122,34 +109,6 @@ module.exports = (config) ->
 
 
 
-
-  # BUILD ------------------------------------------------------------------
-
-  Norma.task "meteor-run-build", (cb) ->
-
-    prepare ->
-
-      build = Path.resolve cwd, _meteor.build.dest
-
-      if !Fs.existsSync build
-        Fs.mkdirSync build
-
-      relativeBuild = Path.resolve src, build
-
-      action = ["build", relativeBuild, "--server", _meteor.build.server]
-
-      Norma.emit "message", "starting build..."
-
-      Meteor.run action, ->
-
-        if typeof cb is "function"
-          cb null
-
-
-
-
-
-
   # METEOR -----------------------------------------------------------------
 
   Norma.task "meteor-run", (cb, tasks) ->
@@ -168,7 +127,7 @@ module.exports = (config) ->
         # if we are running meteor, bind meteor running
         # to continue build
         if tasks[0] is "run"
-          Norma.on "meteor-ready", ->
+          Norma.on "meteor-run-ready", ->
             Norma.emit "message", "✔ Meteor running!"
 
             if typeof cb is "function"
@@ -195,9 +154,9 @@ module.exports = (config) ->
 
       # start for the watch task with cb begin run on meteor
       # actually running
-      Norma.execute "meteor-start", ->
+      Norma.execute "meteor-run-start", ->
 
-        Norma.on "meteor-ready", ->
+        Norma.on "meteor-run-ready", ->
           Norma.emit "message", "✔ Meteor running!"
 
           if typeof cb is "function"
