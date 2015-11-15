@@ -1,0 +1,16 @@
+{
+  "name": "norma-meteor-run",
+  "version": "0.0.1",
+  "description": "meteor-run package for the Norma build tool",
+  "main": "package.coffee",
+  "keywords": [
+    "norma"
+  ],
+  "dependencies": {
+    "kew": "^0.5.0-alpha.1",
+    "ncp": "^1.0.1",
+    "normajs": "^1.0.3",
+    "rimraf": "^2.2.8",
+    "underscore": "^1.7.0"
+  }
+}

@@ -1,0 +1,4 @@
+name: "norma-meteor-run"
+type: "package"
+main: "package.coffee"
+tasks: {}
